@@ -72,6 +72,8 @@ def rps_d(event):
 def row_w(event):
     global p1_row
     x = (p1_row - 1) % 8
+    if x == 0:
+        x =7
     Label(master, image = img[0]).grid(row = x, column = 0)
     Label(master, image = img[8]).grid(row = p1_row, column = 0)
     p1_row = x
@@ -79,6 +81,8 @@ def row_w(event):
 def row_s(event):
     global p1_row
     x = (p1_row + 1) % 8
+    if x == 0:
+        x=1
     Label(master, image = img[0]).grid(row = x, column = 0)
     Label(master, image = img[8]).grid(row = p1_row, column = 0)
     p1_row = x
@@ -134,6 +138,8 @@ def rps_right(event):
 def row_up(event):
     global p2_row
     x = (p2_row - 1) % 8
+    if x == 0:
+        x = 7
     Label(master, image = img[0]).grid(row = x, column = 7)
     Label(master, image = img[8]).grid(row = p2_row, column = 7)
     p2_row = x
@@ -141,6 +147,8 @@ def row_up(event):
 def row_down(event):
     global p2_row
     x = (p2_row + 1) % 8
+    if x == 0:
+        x = 1
     Label(master, image = img[0]).grid(row = x, column = 7)
     Label(master, image = img[8]).grid(row = p2_row, column = 7)
     p2_row = x
@@ -150,7 +158,7 @@ def rps_enter(event):
     global p2_row
     global p2_bots
     global board
-    if board[p2_row][1] > 1:
+    if board[p2_row][6] > 1:
         return
     rps = p2_rps-3
     b = Bot(rps, p2_row, 6)
@@ -169,8 +177,11 @@ def update():
         r = b.r
         c = b.c
         if c == 6:
+            works = Tk()
             p1w = True
             finish = False
+            Label(works, text="Player 1 wins!").grid(row=0)
+            return
         board[r][c] = 1
         rps = board[r][c+1]
         
@@ -208,6 +219,9 @@ def update():
         c = b.c
         if c == 1:
             finish = False
+            works = Tk()
+            Label(works, text="Player 2 wins!").grid(row=0)
+            return
         board[r][c] = 1
         rps = board[r][c-1]
         if rps == 1:
@@ -246,15 +260,8 @@ def update():
     if finish:
         master.after(1000, update)
            
-    else:
-        #master._grid_configure()
-        master.destroy()
-        works = Tk()
-        if p1w:
-            Label(works, text="Player 1 wins!").grid(row=0)
-        else:
-            Label(works, text="Player 2 wins!").grid(row=0)
-   
+    
+            
        
 
     
